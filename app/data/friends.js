@@ -15,7 +15,7 @@ var friends = [
         scores: [1, 5, 4, 4, 5, 2, 5, 5, 5, 3]
     },
     {
-        name: "Denzel Washington"
+        name: "Denzel Washington",
         photo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6C0sp7tSizST6kl4aZ4MKanzEwHyEBdKRA_gbcNySTM0lcU",
         scores: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
     }
