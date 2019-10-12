@@ -3,6 +3,9 @@
 var express = require("express");
 var path = require("path");
 
+//Serve static content forthe app from the "public" directory
+app.use(express.static("public"));
+
 // Sets up the Express App
 // =============================================================
 var app = express();
