@@ -7,53 +7,65 @@ var path = require("path");
 var friends = require("../app/data/friends");
 
 module.exports = function (app) {
-   // Total list of friend entries
-	app.get('/api/friends', function(req, res) {
+	// Total list of friend entries
+	app.get('/api/friends', function (req, res) {
 		res.json(friends);
 	});
 
-	
-	app.post('/api/friends', function(req, res) {
+	app.post("/api/friends", function (req, res) {
+		var totalDifference = 0;
 
-		// Capture the user input object
-		var userInput = req.body;
-		// console.log('userInput = ' + JSON.stringify(userInput));
+		var bestMatch = {
+			name: "",
+			photo: "",
+			friendDifference: 1000
+		};
 
-		var userScores = userInput.scores;
-		
+		var userData = req.body;
+		var userName = userData.name;
+		var userScores = userData.scores;
 
-		// Compute best friend match
-		var matchName = '';
-		var matchImage = '';
-		var maxDifference = 40; // Make the initial value the max difference aloud
+		var b = userScores.map(function (item) {
+			return parseInt(item, 10);
+		});
+		userData = {
+			name: req.body.name,
+			photo: req.body.photo,
+			scores: b
+		};
 
-		// Examine all existing friends in the list
+		console.log("Name: " + userName);
+		console.log("User Score " + userScores);
+
+		var sum = b.reduce((a, b) => a + b, 0);
+
+		console.log("Sum of users score " + sum);
+		console.log("Best match friend diff " + bestMatch.friendDifference);
+		console.log("+++++++=================++++++++++");
+
 		for (var i = 0; i < friends.length; i++) {
-			// console.log('friend = ' + JSON.stringify(friends[i]));
+			console.log(friends[i].name);
+			totalDifference = 0;
+			console.log("Total Diff " + totalDifference);
+			console.log("Best match friend diff " + bestMatch.friendDifference);
 
-			// Compute differenes for each question
-			var diff = 0;
-			for (var j = 0; j < userResponses.length; j++) {
-				diff += Math.abs(friends[i].scores[j] - responses[j]);
+			var bfriendScore = friends[i].scores.reduce((a, b) => a + b, 0);
+			console.log("Total friend score " + bfriendScore);
+			totalDifference += Math.abs(sum - bfriendScore);
+			console.log("-------------------------> " + totalDifference);
+
+			if (totalDifference <= bestMatch.friendDifference) {
+				bestMatch.name = friends[i].name;
+				bestMatch.photo = friends[i].photo;
+				bestMatch.friendDifference = totalDifference;
 			}
-			// console.log('diff = ' + diff);
-
-			// If lowest difference, record the friend match
-			if (diff < maxDifference) {
-				// console.log('Closest match found = ' + diff);
-				// console.log('Friend name = ' + friends[i].name);
-				// console.log('Friend image = ' + friends[i].photo);
-
-				maxDifference = diff;
-				matchName = friends[i].name;
-				matchImage = friends[i].photo;
-			}
+			console.log(totalDifference + " Total Difference");
 		}
+		console.log(bestMatch);
 
-		// Add new user
-		friends.push(userInput);
-
-		// Send appropriate response
-		res.json({status: 'OK', matchName: matchName, matchImage: matchImage});
+		friends.push(userData);
+		console.log("New user added");
+		console.log(userData);
+		res.json(bestMatch);
 	});
 };
