@@ -15,7 +15,7 @@ module.exports = function (app) {
 	app.post("/api/friends", function (req, res) {
 		var newFriend = req.body;
 		var bestFriend;
-		var minDiff = 40;
+		var maxDiff = 40;
 		for (var i = 0; i < friends.length; i++) {
 			var friendDiff = 0;
 			for (var j = 0; j < friends[i].scores.length; j++) {
@@ -23,8 +23,8 @@ module.exports = function (app) {
 				friendDiff += Math.abs(friendScore - parseInt(newFriend.scores));
 			}
 			// if current friend being looped has a lower diff than minDiff change minDiff and the bestFriend
-			if (friendDiff < minDiff) {
-				minDiff = friendDiff;
+			if (friendDiff < maxDiff) {
+				maxDiff = friendDiff;
 				bestFriend = friends[i];
 			}
 		}
