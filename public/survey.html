@@ -7,16 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Friend Finder Survey</title>
 
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
     <!--Link to Font Awesome-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 </head>
@@ -149,8 +143,9 @@
                 <option value="3">4</option>
                 <option value="5">5(Strongly Agree)</option>
             </select> <br>
-
-            <button class="btn btn-primary" style="width: 800px;" type="submit"><i class="fa fa-check-square"></i>
+            <!-- Button trigger modal -->
+            <button class="btn btn-primary" style="width: 800px;" data-toggle="modal" data-target="#exampleModalLong"
+                type="submit"><i class="fa fa-check-square"></i>
                 Submit form</button>
         </form>
         <footer class="footer">
@@ -171,8 +166,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h2 id="name"></h2>
-                    <img id="pic" src="#" alt="" />
+                    <h2 id="friend-name"></h2>
+                    <img id="friend-img" src="#" alt="" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -217,8 +212,8 @@
                         ]
                     };
                     $.post("/api/friends", newFriend, function (data) {
-                        $("#name").text(data.name);
-                        $("#pic").attr("src", data.photo);
+                        $("#friend-name").text(data.name);
+                        $("#friend-img").attr("src", data.photo);
                     });
                     $("#results-modal").modal("toggle");
                     alert("Thanks!");
